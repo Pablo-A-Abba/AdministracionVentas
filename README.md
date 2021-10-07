@@ -1,6 +1,6 @@
 # AdministracionVentas
 Proyecto de una aplicación web para la administración de ventas
-
+-----------------------------------------------------------------
 El objetivo del proyecto es una aplicación web completamente funcional para la gestión de ventas online de productos, con un sistema de registro y gestión de proveedores, 
 registro de clientes y generación de facturas de compra.
 
