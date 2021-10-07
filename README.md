@@ -1,10 +1,10 @@
 # AdministracionVentas
 Proyecto de una aplicación web para la administración de ventas
 
-El objetivo del proyecto es una aplicación web completamente funcional para la gestiónde ventas online de productos, con un sistema de registro y gestión de proveedores, 
+El objetivo del proyecto es una aplicación web completamente funcional para la gestión de ventas online de productos, con un sistema de registro y gestión de proveedores, 
 registro de clientes y generación de facturas de compra.
 
-En primera instancia se creó una aplicación de tipo ASP.NET Web Forms, luego, utilizando Entity Framework y usando una base de datos creada con anterioridad, se generaron los 
+En primera instancia se creó una aplicación de tipo ASP.NET Web Forms, luego, utilizando Entity Framework y una base de datos creada con anterioridad, se generaron los 
 modelos de las clases y las herencias requeridas, posteriormente se fue generando el acceso a los datos y una carpeta de lógica para la gestión de los datos de algunos de 
 los modelos ya creados.
 
