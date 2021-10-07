@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AdministracionModelStoreContainer" CdmEntityContainer="AdministracionEntities">
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="AdministracionModel.Categorias">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosContacto">
+      <EntityTypeMapping TypeName="AdministracionModel.DatosContacto">
+        <MappingFragment StoreEntitySet="DatosContacto">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosContacto_Cliente">
+      <EntityTypeMapping TypeName="AdministracionModel.DatosContacto_Cliente">
+        <MappingFragment StoreEntitySet="DatosContacto_Cliente">
+          <ScalarProperty Name="Cuit" ColumnName="Cuit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosContacto_Persona">
+      <EntityTypeMapping TypeName="AdministracionModel.DatosContacto_Persona">
+        <MappingFragment StoreEntitySet="DatosContacto_Persona">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosContacto_Proveedor">
+      <EntityTypeMapping TypeName="AdministracionModel.DatosContacto_Proveedor">
+        <MappingFragment StoreEntitySet="DatosContacto_Proveedor">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Cuit" ColumnName="Cuit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosContacto_Vendedor">
+      <EntityTypeMapping TypeName="AdministracionModel.DatosContacto_Vendedor">
+        <MappingFragment StoreEntitySet="DatosContacto_Vendedor">
+          <ScalarProperty Name="Dni" ColumnName="Dni" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facturas">
+      <EntityTypeMapping TypeName="AdministracionModel.Facturas">
+        <MappingFragment StoreEntitySet="Facturas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Condicioniva" ColumnName="Condicioniva" />
+          <ScalarProperty Name="Condicionventa" ColumnName="Condicionventa" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="AdministracionModel.Items">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Importe" ColumnName="Importe" />
+          <ScalarProperty Name="FacturaId" ColumnName="FacturaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="AdministracionModel.Productos">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ItemProducto" TypeName="AdministracionModel.ItemProducto" StoreEntitySet="ItemProducto">
+      <EndProperty Name="Items">
+        <ScalarProperty Name="Id" ColumnName="Item_Id" />
+      </EndProperty>
+      <EndProperty Name="Productos">
+        <ScalarProperty Name="Id" ColumnName="Producto_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

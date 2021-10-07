@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AdministracionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DatosContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DatosContacto_Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Cuit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DatosContacto_Persona">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DatosContacto_Proveedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cuit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DatosContacto_Vendedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Dni" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Facturas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Numero" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Condicioniva" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Condicionventa" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemProducto">
+          <Key>
+            <PropertyRef Name="Item_Id" />
+            <PropertyRef Name="Producto_Id" />
+          </Key>
+          <Property Name="Item_Id" Type="int" Nullable="false" />
+          <Property Name="Producto_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FacturaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CategoriaId" Type="int" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cliente_inherits_Persona">
+          <End Role="DatosContacto_Persona" Type="Self.DatosContacto_Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Cliente" Type="Self.DatosContacto_Cliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Cliente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClienteFactura">
+          <End Role="DatosContacto_Cliente" Type="Self.DatosContacto_Cliente" Multiplicity="1" />
+          <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemFactura">
+          <End Role="Facturas" Type="Self.Facturas" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facturas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="FacturaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemProducto_Item">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemProducto" Type="Self.ItemProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemProducto">
+              <PropertyRef Name="Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemProducto_Producto">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="ItemProducto" Type="Self.ItemProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemProducto">
+              <PropertyRef Name="Producto_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_inherits_DatoContacto">
+          <End Role="DatosContacto" Type="Self.DatosContacto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Persona" Type="Self.DatosContacto_Persona" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoCategoria">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoProveedor">
+          <End Role="DatosContacto_Proveedor" Type="Self.DatosContacto_Proveedor" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Proveedor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedor_inherits_DatoContacto">
+          <End Role="DatosContacto" Type="Self.DatosContacto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Proveedor" Type="Self.DatosContacto_Proveedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Proveedor">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vendedor_inherits_Persona">
+          <End Role="DatosContacto_Persona" Type="Self.DatosContacto_Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Vendedor" Type="Self.DatosContacto_Vendedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Vendedor">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AdministracionModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatosContacto" EntityType="Self.DatosContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatosContacto_Cliente" EntityType="Self.DatosContacto_Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatosContacto_Persona" EntityType="Self.DatosContacto_Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatosContacto_Proveedor" EntityType="Self.DatosContacto_Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatosContacto_Vendedor" EntityType="Self.DatosContacto_Vendedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facturas" EntityType="Self.Facturas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemProducto" EntityType="Self.ItemProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cliente_inherits_Persona" Association="Self.FK_Cliente_inherits_Persona">
+            <End Role="DatosContacto_Persona" EntitySet="DatosContacto_Persona" />
+            <End Role="DatosContacto_Cliente" EntitySet="DatosContacto_Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClienteFactura" Association="Self.FK_ClienteFactura">
+            <End Role="DatosContacto_Cliente" EntitySet="DatosContacto_Cliente" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemFactura" Association="Self.FK_ItemFactura">
+            <End Role="Facturas" EntitySet="Facturas" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemProducto_Item" Association="Self.FK_ItemProducto_Item">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemProducto" EntitySet="ItemProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemProducto_Producto" Association="Self.FK_ItemProducto_Producto">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="ItemProducto" EntitySet="ItemProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_inherits_DatoContacto" Association="Self.FK_Persona_inherits_DatoContacto">
+            <End Role="DatosContacto" EntitySet="DatosContacto" />
+            <End Role="DatosContacto_Persona" EntitySet="DatosContacto_Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoCategoria" Association="Self.FK_ProductoCategoria">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoProveedor" Association="Self.FK_ProductoProveedor">
+            <End Role="DatosContacto_Proveedor" EntitySet="DatosContacto_Proveedor" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedor_inherits_DatoContacto" Association="Self.FK_Proveedor_inherits_DatoContacto">
+            <End Role="DatosContacto" EntitySet="DatosContacto" />
+            <End Role="DatosContacto_Proveedor" EntitySet="DatosContacto_Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendedor_inherits_Persona" Association="Self.FK_Vendedor_inherits_Persona">
+            <End Role="DatosContacto_Persona" EntitySet="DatosContacto_Persona" />
+            <End Role="DatosContacto_Vendedor" EntitySet="DatosContacto_Vendedor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdministracionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_ProductoCategoria" FromRole="Categorias" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="DatosContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_inherits_DatoContacto" FromRole="DatosContacto" ToRole="DatosContacto_Persona" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_Proveedor_inherits_DatoContacto" FromRole="DatosContacto" ToRole="DatosContacto_Proveedor" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Cuit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Cliente_inherits_Persona" FromRole="DatosContacto_Cliente" ToRole="DatosContacto_Persona" />
+          <NavigationProperty Name="Facturas" Relationship="Self.FK_ClienteFactura" FromRole="DatosContacto_Cliente" ToRole="Facturas" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DatosContacto" Relationship="Self.FK_Persona_inherits_DatoContacto" FromRole="DatosContacto_Persona" ToRole="DatosContacto" />
+          <NavigationProperty Name="Persona_Cliente" Relationship="Self.FK_Cliente_inherits_Persona" FromRole="DatosContacto_Persona" ToRole="DatosContacto_Cliente" />
+          <NavigationProperty Name="Persona_Vendedor" Relationship="Self.FK_Vendedor_inherits_Persona" FromRole="DatosContacto_Persona" ToRole="DatosContacto_Vendedor" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cuit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DatosContacto" Relationship="Self.FK_Proveedor_inherits_DatoContacto" FromRole="DatosContacto_Proveedor" ToRole="DatosContacto" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_ProductoProveedor" FromRole="DatosContacto_Proveedor" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Vendedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Dni" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Vendedor_inherits_Persona" FromRole="DatosContacto_Vendedor" ToRole="DatosContacto_Persona" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Condicioniva" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Condicionventa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_ClienteFactura" FromRole="Facturas" ToRole="DatosContacto_Cliente" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemFactura" FromRole="Facturas" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FacturaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_ItemFactura" FromRole="Items" ToRole="Facturas" />
+          <NavigationProperty Name="Productos" Relationship="Self.ItemProducto" FromRole="Items" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_ProductoCategoria" FromRole="Productos" ToRole="Categorias" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_ProductoProveedor" FromRole="Productos" ToRole="DatosContacto_Proveedor" />
+          <NavigationProperty Name="Items" Relationship="Self.ItemProducto" FromRole="Productos" ToRole="Items" />
+        </EntityType>
+        <Association Name="FK_ProductoCategoria">
+          <End Role="Categorias" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_inherits_DatoContacto">
+          <End Role="DatosContacto" Type="Self.DatosContacto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Persona" Type="AdministracionModel.Persona" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedor_inherits_DatoContacto">
+          <End Role="DatosContacto" Type="Self.DatosContacto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Proveedor" Type="AdministracionModel.Proveedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Proveedor">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_inherits_Persona">
+          <End Role="DatosContacto_Persona" Type="AdministracionModel.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Cliente" Type="AdministracionModel.Cliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Cliente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClienteFactura">
+          <End Role="DatosContacto_Cliente" Type="AdministracionModel.Cliente" Multiplicity="1" />
+          <End Role="Facturas" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vendedor_inherits_Persona">
+          <End Role="DatosContacto_Persona" Type="AdministracionModel.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DatosContacto_Vendedor" Type="AdministracionModel.Vendedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Persona">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DatosContacto_Vendedor">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoProveedor">
+          <End Role="DatosContacto_Proveedor" Type="AdministracionModel.Proveedor" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DatosContacto_Proveedor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemFactura">
+          <End Role="Facturas" Type="Self.Factura" Multiplicity="1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facturas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="FacturaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ItemProducto">
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AdministracionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
+          <EntitySet Name="DatosContactoes" EntityType="Self.DatosContacto" />
+          <EntitySet Name="Clientes" EntityType="AdministracionModel.Cliente" />
+          <EntitySet Name="Personas" EntityType="AdministracionModel.Persona" />
+          <EntitySet Name="Proveedors" EntityType="AdministracionModel.Proveedor" />
+          <EntitySet Name="Vendedors" EntityType="AdministracionModel.Vendedor" />
+          <EntitySet Name="Facturas" EntityType="Self.Factura" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Productos" EntityType="Self.Producto" />
+          <AssociationSet Name="FK_ProductoCategoria" Association="Self.FK_ProductoCategoria">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_inherits_DatoContacto" Association="Self.FK_Persona_inherits_DatoContacto">
+            <End Role="DatosContacto" EntitySet="DatosContactoes" />
+            <End Role="DatosContacto_Persona" EntitySet="Personas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedor_inherits_DatoContacto" Association="Self.FK_Proveedor_inherits_DatoContacto">
+            <End Role="DatosContacto" EntitySet="DatosContactoes" />
+            <End Role="DatosContacto_Proveedor" EntitySet="Proveedors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_inherits_Persona" Association="Self.FK_Cliente_inherits_Persona">
+            <End Role="DatosContacto_Persona" EntitySet="Personas" />
+            <End Role="DatosContacto_Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClienteFactura" Association="Self.FK_ClienteFactura">
+            <End Role="DatosContacto_Cliente" EntitySet="Clientes" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendedor_inherits_Persona" Association="Self.FK_Vendedor_inherits_Persona">
+            <End Role="DatosContacto_Persona" EntitySet="Personas" />
+            <End Role="DatosContacto_Vendedor" EntitySet="Vendedors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoProveedor" Association="Self.FK_ProductoProveedor">
+            <End Role="DatosContacto_Proveedor" EntitySet="Proveedors" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemFactura" Association="Self.FK_ItemFactura">
+            <End Role="Facturas" EntitySet="Facturas" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="ItemProducto" Association="Self.ItemProducto">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdministracionModelStoreContainer" CdmEntityContainer="AdministracionEntities">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="AdministracionModel.Categoria">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DatosContactoes">
+            <EntityTypeMapping TypeName="AdministracionModel.DatosContacto">
+              <MappingFragment StoreEntitySet="DatosContacto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="AdministracionModel.Cliente">
+              <MappingFragment StoreEntitySet="DatosContacto_Cliente">
+                <ScalarProperty Name="Cuit" ColumnName="Cuit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personas">
+            <EntityTypeMapping TypeName="AdministracionModel.Persona">
+              <MappingFragment StoreEntitySet="DatosContacto_Persona">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedors">
+            <EntityTypeMapping TypeName="AdministracionModel.Proveedor">
+              <MappingFragment StoreEntitySet="DatosContacto_Proveedor">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cuit" ColumnName="Cuit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendedors">
+            <EntityTypeMapping TypeName="AdministracionModel.Vendedor">
+              <MappingFragment StoreEntitySet="DatosContacto_Vendedor">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="AdministracionModel.Factura">
+              <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Condicioniva" ColumnName="Condicioniva" />
+                <ScalarProperty Name="Condicionventa" ColumnName="Condicionventa" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="AdministracionModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="FacturaId" ColumnName="FacturaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="AdministracionModel.Producto">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ItemProducto" TypeName="AdministracionModel.ItemProducto" StoreEntitySet="ItemProducto">
+            <EndProperty Name="Items">
+              <ScalarProperty Name="Id" ColumnName="Item_Id" />
+            </EndProperty>
+            <EndProperty Name="Productos">
+              <ScalarProperty Name="Id" ColumnName="Producto_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

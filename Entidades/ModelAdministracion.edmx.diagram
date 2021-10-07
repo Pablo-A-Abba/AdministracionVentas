@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e31bb63702234e6fbb1a1d35ddddee3b" Name="Diagram1">
+        <EntityTypeShape EntityType="AdministracionModel.Categoria" Width="1.5" PointX="8.625" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.DatosContacto" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Cliente" Width="1.5" PointX="4.75" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Persona" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Proveedor" Width="1.5" PointX="6.375" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Vendedor" Width="1.625" PointX="4.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Factura" Width="1.5" PointX="6.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Item" Width="1.5" PointX="8.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdministracionModel.Producto" Width="1.875" PointX="11.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="AdministracionModel.FK_ProductoCategoria" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_Persona_inherits_DatoContacto" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_Proveedor_inherits_DatoContacto" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_Cliente_inherits_Persona" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_ClienteFactura" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_Vendedor_inherits_Persona" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_ProductoProveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.FK_ItemFactura" ManuallyRouted="false" />
+        <AssociationConnector Association="AdministracionModel.ItemProducto" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
